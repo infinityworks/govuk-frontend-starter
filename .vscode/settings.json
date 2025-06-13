@@ -8,9 +8,7 @@
   "javascript.updateImportsOnFileMove.enabled": "always",
   "terminal.integrated.copyOnSelection": true,
   "terminal.integrated.scrollback": 10000,
-  "stylelint.validate": [
-    "css"
-  ],
+  "stylelint.validate": ["css"],
   "[njk]": {
     "editor.formatOnSave": false
   }
