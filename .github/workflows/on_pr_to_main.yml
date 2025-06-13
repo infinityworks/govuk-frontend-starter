@@ -123,7 +123,7 @@ jobs:
           node-version: lts/*
 
       - name: Download deps
-        uses: bahmutov/npm-install@v1
+        uses: npm ci --include=dev
 
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium
