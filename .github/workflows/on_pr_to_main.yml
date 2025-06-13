@@ -21,8 +21,12 @@ jobs:
         uses: CondeNast/conventional-pull-request-action@v0.2.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # if you squash merge PRs and enabled "Default to PR title for squash merge commits", you can disable all linting of commits
-          ignoreCommits: true
+          # if the PR contains a single commit, fail if the commit message and
+          # the PR title do not match
+          commitTitleMatch: false # default: true
+          # if you squash merge PRs and enabled "Default to PR title for squash
+          # merge commits", you can disable all linting of commits
+          ignoreCommits: true # default: false
 
   check-style:
     name: Check code style
