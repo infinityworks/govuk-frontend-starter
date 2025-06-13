@@ -1,0 +1,11 @@
+/* This is a GOV.UK Publishing specific component that
+can be seen at https://components.publishing.service.gov.uk/component-guide/related_navigation */
+
+.apply-juggling-license-related-items {
+  border-top: 2px solid #1d70b8;
+  padding-top: 10px;
+}
+
+.apply-juggling-license-related-items .govuk-list > li {
+  margin-bottom: 10px;
+}

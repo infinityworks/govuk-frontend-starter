@@ -1,0 +1,20 @@
+{
+  "recommendations": [
+    "christian-kohler.npm-intellisense",
+    "davidanson.vscode-markdownlint",
+    "dbaeumer.vscode-eslint",
+    "docker.docker",
+    "eamodio.gitlens",
+    "esbenp.prettier-vscode",
+    "github.vscode-pull-request-github",
+    "ms-playwright.playwright",
+    "ms-vscode.js-debug",
+    "ms-vsliveshare.vsliveshare",
+    "naumovs.color-highlight",
+    "redhat.vscode-yaml",
+    "stylelint.vscode-stylelint",
+    "sidp.strict-whitespace",
+    "visualstudioexptteam.vscodeintellicode",
+    "xabikos.javascriptsnippets"
+  ]
+}

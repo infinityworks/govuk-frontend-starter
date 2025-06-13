@@ -1,0 +1,33 @@
+{% from "govuk/components/cookie-banner/macro.njk" import govukCookieBanner %}
+
+{% set bannerHtml %}
+  {% if analytics %}
+    <p class="govuk-body">You've accepted analytics cookies. You can <a class="govuk-link" href="/cookies">change your cookie settings</a> at any time.</p>
+  {% else %}
+    <p class="govuk-body">You've rejected analytics cookies. You can <a class="govuk-link" href="/cookies">change your cookie settings</a> at any time.</p>
+  {% endif %}
+{% endset %}
+
+{{ govukCookieBanner({
+  ariaLabel: "Cookies on [name of service]",
+  messages: [
+    {
+      html: bannerHtml,
+      role: "alert",
+      actions: [
+        {
+          text: "Hide cookie message",
+          href: currentUrl,
+          type: "button",
+          classes: "js-hide"
+        }
+      ],
+      classes: "js-confirmation-banner"
+    }
+  ]
+}) }}
+
+<script
+  nonce="{{ cspNonce }}"
+  src="/assets/scripts/hide-cookie-banner.js?v={{ config.app.version }}">
+</script>

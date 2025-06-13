@@ -1,0 +1,9 @@
+{
+  "extends": "@tsconfig/node-lts/tsconfig.json",
+  "compilerOptions": {
+    "checkJs": true
+  },
+  "include": ["**/*.{js,cjs}", "../../tests/**/*.{js,cjs}"],
+  "files": ["../../playwright.config.js"],
+  "exclude": ["node_modules"]
+}

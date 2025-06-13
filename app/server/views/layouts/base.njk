@@ -1,0 +1,168 @@
+{% extends "govuk/template.njk" %}
+{% from "govuk/components/cookie-banner/macro.njk" import govukCookieBanner %}
+{% from "govuk/components/skip-link/macro.njk" import govukSkipLink %}
+{% from "govuk/components/header/macro.njk" import govukHeader %}
+{% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
+{% from "govuk/components/footer/macro.njk" import govukFooter %}
+{% from "govuk/components/service-navigation/macro.njk" import govukServiceNavigation %}
+
+{% block pageTitle %}Apply for a juggling license – GOV.UK{% endblock %}
+
+{% block head %}
+  <link
+    rel="stylesheet"
+    href="/assets/styles/govuk-frontend.min.css?v={{ config.app.version }}"
+  >
+  <meta name="description" content="Apply for a juggling license">
+  <meta
+    name="keywords"
+    content="GOV.UK, govuk, gov, government, uk, frontend, ui, user interface, jinja, python, flask, port, template, templating, macro, component, design system, html, forms, wtf, wtforms, widget, widgets, demo, example"
+  >
+  <meta name="author" content="Government Digital Service">
+
+  <meta
+    name="htmx-config"
+    content="{{ htmxConfig }}"
+  >
+
+  <script type="importmap" nonce="{{ cspNonce }}">
+  {
+    "imports": {
+      "govuk-frontend": "/assets/scripts/govuk-frontend.min.js"
+    }
+  }
+  </script>
+
+  {% if cookiePreferences and cookiePreferences.analytics %}
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id={{ config.GOOGLE_TAG_ID }}"
+      nonce="{{ cspNonce }}"
+    >
+    </script>
+
+    <script nonce="{{ cspNonce }}">
+      window.dataLayer = window.dataLayer || []
+      function gtag () {
+        window.dataLayer.push(arguments)
+      }
+      gtag('js', new Date())
+      gtag('config', '{{ config.GOOGLE_TAG_ID }}')
+    </script>
+  {% endif %}
+{% endblock %}
+
+{% block bodyStart %}
+  {% if not cookiePreferences %}
+    {% set cookieBannerHtml %}
+      <p class="govuk-body">We use some essential cookies to make this service work.</p>
+      <p class="govuk-body">We'd also like to use analytics cookies so we can understand how you use the service and make improvements.</p>
+    {% endset %}
+
+    <form method="post" action="/cookies/cookie-banner">
+      {{ govukCookieBanner({
+        ariaLabel: "Cookies on [name of service]",
+        messages: [
+          {
+            headingText: "Cookies on [name of service]",
+            html: cookieBannerHtml,
+            actions: [
+              {
+                text: "Accept analytics cookies",
+                type: "submit",
+                name: "cookies[analytics]",
+                value: "yes",
+                attributes: {
+                  "hx-post": "/cookies/cookie-banner",
+                  "hx-swap": "outerHTML",
+                  "hx-target": "closest .govuk-cookie-banner"
+                }
+              },
+              {
+                text: "Reject analytics cookies",
+                type: "submit",
+                name: "cookies[analytics]",
+                value: "no",
+                attributes: {
+                  "hx-post": "/cookies/cookie-banner",
+                  "hx-swap": "outerHTML",
+                  "hx-target": "closest .govuk-cookie-banner"
+                }
+              },
+              {
+                text: "View cookies",
+                href: "/cookies"
+              }
+            ]
+          }
+        ]
+      }) }}
+    </form>
+  {% endif %}
+
+  {% if cookieMessage %}
+    {% include "cookie-banner-confirmation.njk" %}
+  {% endif %}
+{% endblock %}
+
+{% block header %}
+  {{ govukHeader({
+    homepageUrl: "https://www.gov.uk/"
+  }) }}
+
+  {{ govukServiceNavigation({
+    serviceName: "Apply for a juggling license",
+    serviceUrl: "/",
+    navigation: [
+      {
+        href: "/help",
+        text: "Get help with this service",
+        active: "/help" in pathname
+      }
+    ]
+  }) }}
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukPhaseBanner({
+    tag: {
+      text: "Alpha"
+    },
+    html: 'This is a new service – your <a class="govuk-link" href="#">feedback</a> will help us to improve it.'
+  }) }}
+{% endblock %}
+
+{% block footer %}
+  {{ govukFooter({
+    meta: {
+      items: [
+        {
+          href: "/help",
+          text: "Help"
+        },
+        {
+          href: "/cookies",
+          text: "Cookies"
+        },
+        {
+          href: "/accessibility-statement",
+          text: "Accessibility statement"
+        }
+      ],
+      html: 'Built by the <a href="https://www.gov.uk/government/organisations/government-digital-service" class="govuk-footer__link">Government Digital Service</a>'
+    }
+  }) }}
+{% endblock %}
+
+{% block bodyEnd %}
+  <script
+    nonce="{{ cspNonce }}"
+    src="/assets/scripts/htmx.min.js?v={{ config.app.version }}"
+  ></script>
+
+  <script
+    type="module"
+    nonce="{{ cspNonce }}"
+    src="/assets/scripts/modules/base.mjs?v={{ config.app.version }}"
+  ></script>
+{% endblock %}

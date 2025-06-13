@@ -1,0 +1,17 @@
+{
+  "editor.bracketPairColorization.enabled": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.linkedEditing": true,
+  "editor.wordWrap": "on",
+  "files.autoSave": "onFocusChange",
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "terminal.integrated.copyOnSelection": true,
+  "terminal.integrated.scrollback": 10000,
+  "stylelint.validate": [
+    "css"
+  ],
+  "[njk]": {
+    "editor.formatOnSave": false
+  }
+}

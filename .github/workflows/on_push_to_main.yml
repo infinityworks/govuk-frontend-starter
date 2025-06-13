@@ -1,0 +1,24 @@
+---
+name: Handle push to `main`
+
+"on":
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sast:
+    name: Create release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Create release PR
+        uses: googleapis/release-please-action@v4
+        with:
+          release-type: node

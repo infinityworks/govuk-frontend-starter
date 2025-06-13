@@ -1,0 +1,136 @@
+---
+name: Pre-merge checks
+
+"on":
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - edited
+      - synchronize
+jobs:
+  check-pr-title:
+    name: Check PR title
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Conventional pull request
+        uses: CondeNast/conventional-pull-request-action@v0.2.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # if you squash merge PRs and enabled "Default to PR title for squash merge commits", you can disable all linting of commits
+          ignoreCommits: true
+
+  check-style:
+    name: Check code style
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel previous runs
+        uses: styfle/cancel-workflow-action@0.12.1
+
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+
+      - name: Download deps
+        run: npm ci
+
+      - name: Prettier
+        run: npx prettier . --check
+
+  lint-js:
+    name: Lint JavaScript
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel previous runs
+        uses: styfle/cancel-workflow-action@0.12.1
+
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+
+      - name: Download deps
+        run: npm ci
+
+      - name: ESLint
+        run: npm run lint:js
+
+  lint-css:
+    name: Lint CSS
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel previous runs
+        uses: styfle/cancel-workflow-action@0.12.1
+
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+
+      - name: Download deps
+        run: npm ci
+
+      - name: Stylelint
+        run: npm run lint:css
+
+  check-docker-build:
+    name: Check Docker build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Validate build configuration
+        uses: docker/build-push-action@v6
+        with:
+          call: check
+
+  playwright:
+    name: Playwright
+    runs-on: ubuntu-latest
+
+    env:
+      GOOGLE_TAG_ID: G-XXXXXXXXX
+      NODE_ENV: production
+      PORT: 3000
+      SESSION_SECRET: swordfish
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+
+      - name: Download deps
+        uses: bahmutov/npm-install@v1
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Playwright tests
+        run: npx playwright test
+
+      - name: Upload report
+        uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30

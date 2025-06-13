@@ -1,0 +1,64 @@
+{% extends "layouts/base.njk" %}
+{% from "govuk/components/accordion/macro.njk" import govukAccordion -%}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-xl">Apply for a juggling license</h1>
+
+      <p class="govuk-body">
+        <a href="/apply-juggling-license/start" class="govuk-link"> Go to the start page </a>
+      </p>
+
+      <h2 class="govuk-heading-l">JavaScript test</h2>
+
+      {{ govukAccordion({
+        id: "accordion-default",
+        items: [
+          {
+            heading: {
+              text: "Writing well for the web"
+            },
+            content: {
+              html: "<p class='govuk-body'>This is the content for Writing well for the web.</p>"
+            }
+          },
+          {
+            heading: {
+              text: "Writing well for specialists"
+            },
+            content: {
+              html: "<p class='govuk-body'>This is the content for Writing well for specialists.</p>"
+            }
+          },
+          {
+            heading: {
+              text: "Know your audience"
+            },
+            content: {
+              html: "<p class='govuk-body'>This is the content for Know your audience.</p>"
+            }
+          },
+          {
+            heading: {
+              text: "How people read"
+            },
+            content: {
+              html: "<p class='govuk-body'>This is the content for How people read.</p>"
+            }
+          }
+        ]
+      }) -}}
+    </div>
+  </div>
+{% endblock %}
+
+{% block bodyEnd %}
+  {{ super() }}
+
+  <script
+    type="module"
+    nonce="{{ cspNonce }}"
+    src="/assets/scripts/modules/accordion.mjs?v={{ config.app.version }}"
+  ></script>
+{% endblock %}
