@@ -9,7 +9,7 @@
     "lint:css": "stylelint 'app/**/*.css'",
     "lint:js": "eslint .",
     "lint": "npm run lint:css && npm run lint:js",
-    "start": "node --env-file=.env app/server",
+    "start": "node app/server",
     "test": "playwright test --ui",
     "typecheck:client": "tsc -p app/client/jsconfig.json",
     "typecheck:server": "tsc -p app/server/jsconfig.json",
