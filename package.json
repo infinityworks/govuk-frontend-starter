@@ -46,7 +46,7 @@
     "@tsconfig/recommended": "^1.0.8",
     "@types/express": "^5.0.3",
     "@types/govuk-frontend": "^5.9.0",
-    "@types/node": "^22.13.14",
+    "@types/node": "^24.0.1",
     "eslint": "^9.28.0",
     "globals": "^16.2.0",
     "nodemon": "^3.1.10",
