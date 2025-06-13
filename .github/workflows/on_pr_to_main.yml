@@ -126,7 +126,7 @@ jobs:
         run: npm ci --include=dev
 
       - name: Install Playwright browsers
-        run: npx playwright install --with-deps chromium
+        run: npx playwright install --with-deps
 
       - name: Playwright tests
         run: npx playwright test
